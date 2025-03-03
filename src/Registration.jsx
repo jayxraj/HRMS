@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./app.css";
-import Login from "./Login";
 
 const Registration = () => {
   return (
@@ -14,13 +14,10 @@ const Registration = () => {
       <section className="ftco-section">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-6 text-center mb-5"></div>
-          </div>
-          <div className="row justify-content-center">
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Registration</h3>
-                <form action="#" className="signin-form">
+                <form className="signin-form">
                   <div className="form-group">
                     <input
                       type="text"
@@ -39,7 +36,6 @@ const Registration = () => {
                   </div>
                   <div className="form-group">
                     <input
-                      id="password-field"
                       type="password"
                       className="form-control"
                       placeholder="Password"
@@ -48,7 +44,6 @@ const Registration = () => {
                   </div>
                   <div className="form-group">
                     <input
-                      id="password-field"
                       type="password"
                       className="form-control"
                       placeholder="Confirm Password"
@@ -67,9 +62,9 @@ const Registration = () => {
                 <p className="w-100 text-center">&mdash; Or &mdash;</p>
                 <div style={{ marginBottom: "73px" }}>
                   <center>
-                    <a className="mb-4 text-center" href="#">
+                    <Link className="mb-4 text-center" to="/">
                       <u>Go To Login</u>
-                    </a>
+                    </Link>
                   </center>
                 </div>
               </div>
