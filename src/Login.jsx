@@ -8,7 +8,7 @@ const Login = () => {
       className="img js-fullheight"
       style={{
         backgroundImage:
-          "url(https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_1280.jpg)",
+          "url(https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538_1280.jpg)",
       }}
     >
       <section className="ftco-section">

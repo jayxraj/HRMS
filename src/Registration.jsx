@@ -8,7 +8,7 @@ const Registration = () => {
       className="img js-fullheight"
       style={{
         backgroundImage:
-          "url(https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_1280.jpg)",
+          "url(https://cdn.pixabay.com/photo/2015/07/28/22/01/office-865091_1280.jpg)",
       }}
     >
       <section className="ftco-section">
