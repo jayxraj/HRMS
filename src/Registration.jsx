@@ -83,6 +83,7 @@ const Registration = () => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
+                    <div></div>
                   </div>
                   {error && <p style={{ color: "red", fontSize:"smaller" }}>{error}</p>}
 
