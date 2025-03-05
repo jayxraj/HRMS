@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./app.css";
 
 const Registration = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+    try {
+      await axios.post("http://localhost:8080/api/auth/register", {
+        email,
+        username,
+        password,
+        confirmPassword,
+      });
+      alert("Successfully registerd, Redirecting to login page");
+      navigate("/login");
+      // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      alert("Registration failed");
+    }
+  };
+
   return (
     <div
       className="img js-fullheight"
@@ -17,12 +47,13 @@ const Registration = () => {
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Registration</h3>
-                <form className="signin-form">
+                <form className="signin-form" onSubmit={handleRegister}>
                   <div className="form-group">
                     <input
-                      type="text"
+                      type="email"
                       className="form-control"
                       placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -31,6 +62,7 @@ const Registration = () => {
                       type="text"
                       className="form-control"
                       placeholder="Username"
+                      onChange={(e) => setUsername(e.target.value)}
                       required
                     />
                   </div>
@@ -39,6 +71,7 @@ const Registration = () => {
                       type="password"
                       className="form-control"
                       placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
@@ -47,9 +80,12 @@ const Registration = () => {
                       type="password"
                       className="form-control"
                       placeholder="Confirm Password"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
                   </div>
+                  {error && <p style={{ color: "red", fontSize:"smaller" }}>{error}</p>}
+
                   <div className="form-group">
                     <button
                       type="submit"
@@ -59,6 +95,7 @@ const Registration = () => {
                     </button>
                   </div>
                 </form>
+
                 <p className="w-100 text-center">&mdash; Or &mdash;</p>
                 <div style={{ marginBottom: "73px" }}>
                   <center>

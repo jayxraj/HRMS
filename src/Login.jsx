@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import "./app.css";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        { email, password }
+      );
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
+      // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      alert("Invalid credentials");
+    }
+  };
   return (
     <div
       className="img js-fullheight"
@@ -17,12 +38,13 @@ const Login = () => {
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Have an account?</h3>
-                <form className="signin-form">
+                <form className="signin-form" onSubmit={handleLogin}>
                   <div className="form-group">
                     <input
-                      type="text"
+                      type="email"
                       className="form-control"
-                      placeholder="Username"
+                      placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -31,6 +53,7 @@ const Login = () => {
                       type="password"
                       className="form-control"
                       placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
