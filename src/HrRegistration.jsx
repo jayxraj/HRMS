@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./app.css";
 
-const Registration = () => {
+const HrRegistration = () => {
   const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,9 +19,8 @@ const Registration = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:8080/api/auth/register", {
+      await axios.post("http://localhost:8080/api/auth/hrregister", {
         email,
-        department,
         username,
         password,
         confirmPassword,
@@ -31,7 +29,7 @@ const Registration = () => {
       navigate("/login");
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      alert("Registration failed");
+      alert("hrRegistration failed");
     }
   };
 
@@ -48,7 +46,7 @@ const Registration = () => {
           <div className="row justify-content-center">
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
-                <h3 className="mb-4 text-center">Employee Registration</h3>
+                <h3 className="mb-4 text-center">HR Registration</h3>
                 <form className="signin-form" onSubmit={handleRegister}>
                   <div className="form-group">
                     <input
@@ -56,15 +54,6 @@ const Registration = () => {
                       className="form-control"
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Department"
-                      onChange={(e) => setDepartment(e.target.value)}
                       required
                     />
                   </div>
@@ -127,4 +116,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default HrRegistration;
