@@ -9,6 +9,7 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState(""); // State for role selection
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,8 +25,9 @@ const Registration = () => {
         username,
         password,
         confirmPassword,
+        role, // Send selected role to backend
       });
-      alert("Successfully registerd, Redirecting to login page");
+      alert("Successfully registered, Redirecting to login page");
       navigate("/login");
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
@@ -48,6 +50,29 @@ const Registration = () => {
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Registration</h3>
                 <form className="signin-form" onSubmit={handleRegister}>
+                  {/* Role Dropdown */}
+                  <div className="form-group">
+                    <select
+                      className="form-control text-gray-700"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      required
+                    >
+                      <option value="" className="text-black">
+                        Select Role
+                      </option>
+                      <option value="hr" className="text-black">
+                        HR
+                      </option>
+                      <option value="employee" className="text-black">
+                        Employee
+                      </option>
+                      <option value="candidate" className="text-black">
+                        Candidate
+                      </option>
+                    </select>
+                  </div>
+                  {/* Email Field */}
                   <div className="form-group">
                     <input
                       type="email"
@@ -57,6 +82,8 @@ const Registration = () => {
                       required
                     />
                   </div>
+
+                  {/* Username Field */}
                   <div className="form-group">
                     <input
                       type="text"
@@ -66,6 +93,8 @@ const Registration = () => {
                       required
                     />
                   </div>
+
+                  {/* Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
@@ -75,6 +104,8 @@ const Registration = () => {
                       required
                     />
                   </div>
+
+                  {/* Confirm Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
@@ -84,8 +115,13 @@ const Registration = () => {
                       required
                     />
                   </div>
-                  {error && <p style={{ color: "red", fontSize:"smaller" }}>{error}</p>}
 
+                  {/* Error Message */}
+                  {error && (
+                    <p style={{ color: "red", fontSize: "smaller" }}>{error}</p>
+                  )}
+
+                  {/* Register Button */}
                   <div className="form-group">
                     <button
                       type="submit"

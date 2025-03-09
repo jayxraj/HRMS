@@ -2624,6 +2624,7 @@ textarea.form-control.is-invalid {
   .form-inline .form-control-plaintext {
     display: inline-block;
   }
+
   .form-inline .input-group,
   .form-inline .custom-select {
     width: auto;
@@ -10752,7 +10753,7 @@ h5,
   background: transparent;
   border: none;
   height: 50px;
-  color: white !important;
+  color: rgba(200, 200, 200) !important;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 40px;
