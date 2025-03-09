@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./app.css";
 
-const Registration = () => {
+const HrRegistration = () => {
   const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState(""); // State for role selection
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -21,19 +19,17 @@ const Registration = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:8080/api/auth/register", {
+      await axios.post("http://localhost:8080/api/auth/hrregister", {
         email,
-        department,
         username,
         password,
         confirmPassword,
-        role, // Send selected role to backend
       });
-      alert("Successfully registered, Redirecting to login page");
+      alert("Successfully registerd, Redirecting to login page");
       navigate("/login");
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      alert("Registration failed");
+      alert("hrRegistration failed");
     }
   };
 
@@ -50,48 +46,14 @@ const Registration = () => {
           <div className="row justify-content-center">
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
-                <h3 className="mb-4 text-center">Employee Registration</h3>
+                <h3 className="mb-4 text-center">HR Registration</h3>
                 <form className="signin-form" onSubmit={handleRegister}>
-                  {/* Role Dropdown */}
-                  <div className="form-group">
-                    <select
-                      className="form-control text-gray-700"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      required
-                    >
-                      <option value="" className="text-black">
-                        Select Role
-                      </option>
-                      <option value="hr" className="text-black">
-                        HR
-                      </option>
-                      <option value="employee" className="text-black">
-                        Employee
-                      </option>
-                      <option value="candidate" className="text-black">
-                        Candidate
-                      </option>
-                    </select>
-                  </div>
-                  {/* Email Field */}
                   <div className="form-group">
                     <input
                       type="email"
                       className="form-control"
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  {/* Username Field */}
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Department"
-                      onChange={(e) => setDepartment(e.target.value)}
                       required
                     />
                   </div>
@@ -104,8 +66,6 @@ const Registration = () => {
                       required
                     />
                   </div>
-
-                  {/* Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
@@ -115,8 +75,6 @@ const Registration = () => {
                       required
                     />
                   </div>
-
-                  {/* Confirm Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
@@ -127,12 +85,10 @@ const Registration = () => {
                     />
                     <div></div>
                   </div>
-                  {/* Error Message */}
                   {error && (
                     <p style={{ color: "red", fontSize: "smaller" }}>{error}</p>
                   )}
 
-                  {/* Register Button */}
                   <div className="form-group">
                     <button
                       type="submit"
@@ -160,4 +116,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default HrRegistration;
