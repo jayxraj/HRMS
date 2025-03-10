@@ -6,8 +6,7 @@ import "./app.css";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
-  const [username, setUsername] = useState("");
+  const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState(""); // State for role selection
@@ -23,8 +22,7 @@ const Registration = () => {
     try {
       await axios.post("http://localhost:8080/api/auth/register", {
         email,
-        department,
-        username,
+        fullname,
         password,
         confirmPassword,
         role, // Send selected role to backend
@@ -50,7 +48,7 @@ const Registration = () => {
           <div className="row justify-content-center">
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
-                <h3 className="mb-4 text-center">Employee Registration</h3>
+                <h3 className="mb-4 text-center">Registration</h3>
                 <form className="signin-form" onSubmit={handleRegister}>
                   {/* Role Dropdown */}
                   <div className="form-group">
@@ -74,6 +72,16 @@ const Registration = () => {
                       </option>
                     </select>
                   </div>
+                  {/* Username Field */}
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Full Name"
+                      onChange={(e) => setFullname(e.target.value)}
+                      required
+                    />
+                  </div>
                   {/* Email Field */}
                   <div className="form-group">
                     <input
@@ -81,26 +89,6 @@ const Registration = () => {
                       className="form-control"
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  {/* Username Field */}
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Department"
-                      onChange={(e) => setDepartment(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Username"
-                      onChange={(e) => setUsername(e.target.value)}
                       required
                     />
                   </div>
@@ -125,8 +113,8 @@ const Registration = () => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
-                    <div></div>
                   </div>
+
                   {/* Error Message */}
                   {error && (
                     <p style={{ color: "red", fontSize: "smaller" }}>{error}</p>

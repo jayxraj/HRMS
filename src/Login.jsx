@@ -84,10 +84,7 @@ const Login = () => {
                 <div style={{ marginBottom: "120px" }}>
                   <center>
                     <Link className="mb-4 text-center" to="/register">
-                      <u>Register as Employee</u>
-                    </Link><br></br>
-                    <Link className="mb-4 text-center" to="/hrRegister">
-                      <u>Register as HR</u>
+                      <u>Register Here</u>
                     </Link>
                   </center>
                 </div>
