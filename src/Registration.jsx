@@ -1,38 +1,79 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./app.css";
 
+const registerUser = async (userData) => {
+  try {
+    const response = await fetch("http://localhost:8080/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Registration failed");
+    }
+
+    return await response.json();
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+
 const Registration = () => {
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState(""); // State for role selection
+  const [formData, setFormData] = useState({
+    email: "",
+    fullname: "",
+    password: "",
+    confirmPassword: "",
+    role: "",
+  });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    if (
+      !formData.email ||
+      !formData.fullname ||
+      !formData.password ||
+      !formData.confirmPassword ||
+      !formData.role
+    ) {
+      setError("All fields are required");
+      return false;
     }
-    try {
-      await axios.post("http://localhost:8080/api/auth/register", {
-        email,
-        fullname,
-        password,
-        confirmPassword,
-        role, // Send selected role to backend
-      });
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setLoading(true);
+    const response = await registerUser(formData);
+
+    if (response.error) {
+      setError(response.error);
+    } else {
       alert("Successfully registered, Redirecting to login page");
       navigate("/login");
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      alert("Registration failed");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -49,88 +90,78 @@ const Registration = () => {
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Registration</h3>
-                <form className="signin-form" onSubmit={handleRegister}>
-                  {/* Role Dropdown */}
+                <form className="signin-form" onSubmit={handleSubmit}>
                   <div className="form-group">
                     <select
                       className="form-control text-gray-700"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
+                      name="role"
+                      value={formData.role}
+                      onChange={handleChange}
                       required
                     >
-                      <option value="" className="text-black">
-                        Select Role
-                      </option>
-                      <option value="hr" className="text-black">
-                        HR
-                      </option>
-                      <option value="employee" className="text-black">
-                        Employee
-                      </option>
-                      <option value="candidate" className="text-black">
-                        Candidate
-                      </option>
+                      <option value="">Select Role</option>
+                      <option value="HR">HR</option>
+                      <option value="EMPLOYEE">Employee</option>
+                      <option value="CANDIDATE">Candidate</option>
                     </select>
                   </div>
-                  {/* Username Field */}
                   <div className="form-group">
                     <input
                       type="text"
                       className="form-control"
                       placeholder="Full Name"
-                      onChange={(e) => setFullname(e.target.value)}
+                      name="fullname"
+                      value={formData.fullname}
+                      onChange={handleChange}
                       required
                     />
                   </div>
-                  {/* Email Field */}
                   <div className="form-group">
                     <input
                       type="email"
                       className="form-control"
                       placeholder="Email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       required
                     />
                   </div>
-
-                  {/* Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       required
                     />
                   </div>
-
-                  {/* Confirm Password Field */}
                   <div className="form-group">
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Confirm Password"
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
                       required
                     />
                   </div>
-
-                  {/* Error Message */}
                   {error && (
                     <p style={{ color: "red", fontSize: "smaller" }}>{error}</p>
                   )}
-
-                  {/* Register Button */}
                   <div className="form-group">
                     <button
                       type="submit"
                       className="form-control btn btn-primary submit px-3"
+                      disabled={loading}
                     >
-                      Register
+                      {loading ? "Registering..." : "Register"}
                     </button>
                   </div>
                 </form>
-
                 <p className="w-100 text-center">&mdash; Or &mdash;</p>
                 <div style={{ marginBottom: "73px" }}>
                   <center>

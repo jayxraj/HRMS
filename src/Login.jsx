@@ -1,29 +1,79 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import "./app.css";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const loginUser = async (email, password) => {
+  try {
+    const response = await fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Invalid credentials");
+    }
+
+    return await response.json();
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+const Login = ({ onLogin }) => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        { email, password }
-      );
-      localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      alert("Invalid credentials");
-    }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setLoading(true);
+    setError("");
+
+    const response = await loginUser(formData.email, formData.password);
+
+    if (response.error) {
+      setError(response.error);
+    } else {
+      const { token, user } = response;
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role);
+      localStorage.setItem("id", user.id);
+      localStorage.setItem("username", user.name);
+
+      const roleRedirects = {
+        ADMIN: "/admin",
+        HR: "/hr",
+        EMPLOYEE: "/employee",
+        CANDIDATE: "/candidate",
+      };
+
+      navigate(roleRedirects[user.role] || "/");
+      onLogin(user); // Notify the parent component about the login
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div
       className="img js-fullheight"
@@ -38,31 +88,43 @@ const Login = () => {
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Have an account?</h3>
-                <form className="signin-form" onSubmit={handleLogin}>
+                <form className="signin-form" onSubmit={handleSubmit}>
                   <div className="form-group">
                     <input
                       type="email"
                       className="form-control"
                       placeholder="Email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       required
                     />
+                    {errors.email && (
+                      <p style={{ color: "red" }}>{errors.email}</p>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       required
                     />
+                    {errors.password && (
+                      <p style={{ color: "red" }}>{errors.password}</p>
+                    )}
                   </div>
+                  {error && <p style={{ color: "red" }}>{error}</p>}
                   <div className="form-group">
                     <button
                       type="submit"
                       className="form-control btn btn-primary submit px-3"
+                      disabled={loading}
                     >
-                      Sign In
+                      {loading ? "Logging in..." : "Sign In"}
                     </button>
                   </div>
                   <div className="form-group d-md-flex">
