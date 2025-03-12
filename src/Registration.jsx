@@ -27,7 +27,7 @@ const registerUser = async (userData) => {
 const Registration = () => {
   const [formData, setFormData] = useState({
     email: "",
-    fullname: "",
+    name: "",
     password: "",
     confirmPassword: "",
     role: "",
@@ -43,7 +43,7 @@ const Registration = () => {
   const validateForm = () => {
     if (
       !formData.email ||
-      !formData.fullname ||
+      !formData.name ||
       !formData.password ||
       !formData.confirmPassword ||
       !formData.role
@@ -109,9 +109,9 @@ const Registration = () => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Full Name"
-                      name="fullname"
-                      value={formData.fullname}
+                      placeholder="Name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
                       required
                     />
