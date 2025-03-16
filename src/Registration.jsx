@@ -5,10 +5,11 @@ import "./app.css";
 
 const registerUser = async (userData) => {
   try {
-    const response = await fetch("http://localhost:8080/auth/register", {
+    const response = await fetch("http://localhost:8080/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(userData),
     });
@@ -22,7 +23,6 @@ const registerUser = async (userData) => {
     return { error: error.message };
   }
 };
-
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -165,7 +165,7 @@ const Registration = () => {
                 <p className="w-100 text-center">&mdash; Or &mdash;</p>
                 <div style={{ marginBottom: "73px" }}>
                   <center>
-                    <Link className="mb-4 text-center" to="/">
+                    <Link className="mb-4 text-center" to="/login">
                       <u>Go To Login</u>
                     </Link>
                   </center>
