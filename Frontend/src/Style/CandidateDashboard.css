@@ -1,0 +1,118 @@
+/* General Styles */
+.candidate-dashboard {
+    padding: 20px;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .candidate-dashboard h4 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Job Postings Section */
+  .job-postings-container {
+    margin-bottom: 30px;
+  }
+  
+  .job-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: #fff;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card h6 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .job-card p {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .apply-button {
+    width: 100%;
+    margin-top: 10px;
+    background: #1976d2 !important;
+    color: #fff;
+  }
+  
+  .apply-button:disabled {
+    background: #bbb !important;
+  }
+  
+  /* Application Form */
+  .application-form {
+    max-width: 500px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .application-form input[type="file"] {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  /* Application Status Table */
+  .application-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .application-table th, .application-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .application-table th {
+    background: #1976d2;
+    color: #fff;
+  }
+  
+  .application-table tr:hover {
+    background: #f5f5f5;
+  }
+  
+  /* Status Colors */
+  .status-approved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-pending {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-rejected {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .job-card {
+      padding: 12px;
+    }
+  
+    .application-form {
+      padding: 16px;
+    }
+  
+    .application-table th, .application-table td {
+      padding: 10px;
+    }
+  }
+  

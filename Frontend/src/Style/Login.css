@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  /* background: linear-gradient(135deg, #eb754a, #ff758c); */
+  transition: 0.5s;
+}
+
+.login-wrapper {
+  position: relative;
+  width: 900px;
+  height: 500px;
+  background: white;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+}
+
+/* Welcome Section */
+.welcome-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #53c1f4, #026378);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 50px 0 0 50px;
+}
+
+.welcome-section h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.welcome-section p {
+  font-size: 14px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.welcome-section button {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: 0.3s ease-in-out;
+}
+
+.welcome-section button:hover {
+  /* background: white; */
+  border-color: white;
+  color:whitesmoke;
+}
+
+/* Form Container */
+.form-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: transform 0.6s ease-in-out;
+  border-radius: 0 50px 50px 0;
+}
+
+/* Inputs and Buttons */
+.form-container input,
+.form-container select,
+.form-container button {
+  color: hwb(0 28% 72% / 0.859);
+  background-color: white;
+  width: 100%;
+  max-width: 300px; /* Prevents overlapping */
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+.form-container button {
+  color: hwb(0 91% 7% / 0.859);
+ 
+}
+
+.form-container input:hover,
+.form-container select:hover {
+  border-color:black;
+  outline: none;
+  box-shadow: 0 0 8px rgba(33, 26, 28, 0.4);
+}
+/* select option {
+  color:black;
+} */
+
+button {
+  color: hwb(180 94% 2%);
+  background: linear-gradient(135deg, #19a3e4, #079dbf);
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #2a87b2, #026378);
+  color: whitesmoke;
+}
+
+/* Prevent overlap issue */
+.register-mode .welcome-section {
+  transform: translateX(100%);
+}
+
+.register-mode .form-container {
+  transform: translateX(-100%);
+}
+
+/* Responsive Fix */
+@media screen and (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .welcome-section,
+  .form-container {
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    border-radius: 50px;
+  }
+
+  .register-mode .welcome-section,
+  .register-mode .form-container {
+    transform: none;
+  }
+}
